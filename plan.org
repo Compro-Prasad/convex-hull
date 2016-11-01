@@ -1,0 +1,11 @@
+#+TITLE: Maths
+#+AUTHOR: Compro Prasad
+* Triangle
+** Area
+   1. Given points p1(x1, y1), p2(x2, y2), p3(x3, y3) the area is given by:
+	  #+NAME: triangle-area-point-form
+	  #+BEGIN_EXAMPLE -i
+	       1
+	  A = --- * [ x1(y3 - y1) + x2(y1 - y3) + x3(y2 - y1) ]
+           2
+	  #+END_EXAMPLE
