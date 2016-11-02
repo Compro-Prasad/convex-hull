@@ -16,9 +16,13 @@ public:
 	convex_hull() : mid_pt(0, 0) {}
 
 	int8_t compare_by_angle_from_vertical(const point<T> p1, const point<T> p2) const {
-		angle<T> a1(DEG), a2(DEG);
+		angle<T> a1(0, DEG), a2(0, DEG);
 		a1.angle_from_vertical(this->mid_pt, p1);
 		a2.angle_from_vertical(this->mid_pt, p2);
+		if (p2.x < this->mid_pt.x)
+			a2 = -a2 + a2.one_rotation();
+		if (p1.x < this->mid_pt.x)
+			a1 = -a1 + a1.one_rotation();
 		return a1 == a2 ? 0 : a1 > a2 ? 1 : -1;
 	}
 

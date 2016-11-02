@@ -58,11 +58,11 @@ struct point
 		return this->x != p.x || this->y != p.y;
 	}
 
-	T slope(point p) const {
+	T slope(const point p) const {
 		return (this->y - p.y) / (this->x - p.x);
 	}
 
-	T distance(point p) const {
+	T distance(const point p) const {
 		return sqrtl(powl(this->y - p.y, 2) + powl(this->x - p.x, 2));
 	}
 };
@@ -112,7 +112,7 @@ public:
 	}
 
 	angle& angle_from_vertical(const point<T> p1, const point<T> p2) {
-		this->type = RAD;
+		//this->type = RAD;
 		point<T> arbitrary(p1.x, p1.y - 1); // point just below p1
 		*this = this->to_angle(arbitrary, p1, p2).to_positive_normal();
 		return *this;
@@ -135,12 +135,9 @@ public:
 	}
 
 	angle& to_angle(point<T> p1, point<T> p2, point<T> p3) {
-		if (p2.distance(p1) + p2.distance(p3) == p1.distance(p3))
-			this->value = half_rotation();
-		else {
-			this->value = atanl(p2.slope(p3)) - atanl(p2.slope(p1));
-			this->value *= (this->type == DEG ? 180.0 / PI : 1.0);
-		}
+		T x = p1.distance(p2), y = p2.distance(p3), z = p3.distance(p1);
+		this->value = acosl((x*x + y*y - z*z) / (2*x*y));
+		this->value *= (this->type == DEG ? 180.0 / PI : 1.0);
 		return *this;
 	}
 
@@ -181,6 +178,56 @@ public:
 		else
 			xyz.value = this->value;
 		return xyz;
+	}
+
+	angle operator-(const angle<T> x) const {
+		angle xyz = *this;
+		xyz.value = fmodl(xyz.value - x.value, xyz.one_rotation());
+		return xyz;
+	}
+
+	angle operator-() const {
+		angle<T> xyz = *this;
+		xyz.value = -xyz.value;
+		return xyz;
+	}
+
+	angle operator-=(const angle<T> x) {
+		this->value = fmodl(this->value - x.value, this->one_rotation());
+		return *this;
+	}
+
+	angle operator-(const T x) const {
+		angle xyz = *this;
+		xyz.value = fmodl(xyz.value - x, xyz.one_rotation());
+		return xyz;
+	}
+
+	angle operator-=(const T x) {
+		this->value = fmodl(this->value - x, this->one_rotation());
+		return *this;
+	}
+
+	angle operator+(const angle<T> x) const {
+		angle xyz = *this;
+		xyz.value = fmodl(xyz.value + x.value, xyz.one_rotation());
+		return xyz;
+	}
+
+	angle operator+=(const angle<T> x) {
+		this->value = fmodl(this->value + x.value, this->one_rotation());
+		return *this;
+	}
+
+	angle operator+(const T x) const {
+		angle xyz = *this;
+		xyz.value = fmodl(xyz.value + x, xyz.one_rotation());
+		return xyz;
+	}
+
+	angle operator+=(const T x) {
+		this->value = fmodl(this->value + x, this->one_rotation());
+		return *this;
 	}
 
 	angle& operator=(const angle &x) {
@@ -280,8 +327,11 @@ public:
 
 // int main()
 // {
-// 	point<double> p1(1, 0), p2(-1, 0), p3(0, 0);
-// 	angle<double> a;
-// 	printf("%lf\n", a.to_angle(p1, p2, p3).to_degree().angleValue());
+// 	point<double> p(3, 1), p1(2, 3), p2(1, 3), mid(2, 2), m(2, 1);
+// 	angle<double> a(0, DEG);
+// 	printf("%lf,%lf,%lf\n",
+// 		   a.to_angle(m, mid, p).angleValue(),
+// 		   a.to_angle(m, mid, p1).angleValue(),
+// 		   a.to_angle(m, mid, p2).angleValue());
 // 	return 0;
 // }
