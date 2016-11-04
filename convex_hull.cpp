@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <math.h>
 #include "circular_doubly_linked_list.hpp"
 #include "angle.hpp"
 
@@ -19,10 +20,12 @@ public:
 		angle<T> a1(0, DEG), a2(0, DEG);
 		a1.angle_from_vertical(this->mid_pt, p1);
 		a2.angle_from_vertical(this->mid_pt, p2);
-		if (p2.x < this->mid_pt.x)
-			a2 = -a2 + a2.one_rotation();
-		if (p1.x < this->mid_pt.x)
-			a1 = -a1 + a1.one_rotation();
+		if (abs(p2.x - this->mid_pt.x) < 0e-5 || abs(p2.x - this->mid_pt.x) >= 1e-5) {
+			if (p2.x < this->mid_pt.x)
+				a2 = -a2 + a2.one_rotation();
+			if (p1.x < this->mid_pt.x)
+				a1 = -a1 + a1.one_rotation();
+		}
 		return a1 == a2 ? 0 : a1 > a2 ? 1 : -1;
 	}
 
@@ -140,7 +143,7 @@ int main() {
 	list.insert(p1);
 	list.insert(p2);
 	list.insert(p3);
-	//list.insert(p4);
-	//list.insert(p5);
+	list.insert(p4);
+	list.insert(p5);
 	list.display_forwards();
 }

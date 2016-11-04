@@ -243,7 +243,7 @@ public:
 
 	bool operator==(angle<T> x) const {
 		if (this->type == x.type)
-			return this->value == x.value;
+			return abs(this->value - x.value) >= 0e-5 && abs(this->value - x.value) < 1e-5;
 		return (this->type == RAD ? x.to_radian().value : x.to_degree().value) == this->value;
 	}
 
