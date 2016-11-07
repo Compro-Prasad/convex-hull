@@ -16,7 +16,7 @@ template <typename T>
 struct Dlink
 {
 	T value;
-	Dlink *next, *prev;
+	Dlink<T> *next, *prev;
 
 	Dlink() {
 		this->value = 0;
@@ -67,6 +67,31 @@ class CDLlist
 protected:
 	Dlink<T> *front, *rear;
 	size_t n;
+
+	void remove_node(Dlink<T> **t) {
+		if (*t) {
+			Dlink<T> *z = *t;
+			if (this->rear != this->front) {
+				(*t)->prev->next = (*t)->next;
+				(*t)->next->prev = (*t)->prev;
+				if (this->rear == *t)
+					this->rear  = this->rear->next;
+				if (this->front == *t)
+					this->front = this->front->prev;
+			} else
+				this->rear = this->front = NULL;
+			delete z;
+			--this->n;
+		}
+	}
+
+	Dlink<T> **find_node(T element) {
+		Dlink<T> **t = &this->rear;
+		while (*t && (*t)->value != element)
+			t = &(*t)->next;
+		return t;
+	}
+
 public:
 	CDLlist() {
 		this->front = this->rear = NULL;
@@ -123,6 +148,7 @@ public:
 	}
 
 	void remove(T element) {
+		this->remove_node(this->find_node(element));/*
 		if (this->rear) {
 			Dlink<T> **t = &this->rear;
 			while (*t && (*t)->value != element)
@@ -140,7 +166,7 @@ public:
 					this->rear = this->front = NULL;
 				delete z;
 			}
-		}
+			}*/
 	}
 
 	void display_forwards() {

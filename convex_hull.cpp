@@ -135,15 +135,36 @@ public:
 			}
 		}
 	}
+
+	void eleminate() {
+		if (this->n > 2) {
+			T d1, d2, d3;
+			Dlink<point<T> > **x = &this->rear,
+				**rx = &this->rear->next,
+				**rrx = &this->rear->next->next;
+			while (*rx != this->rear) {
+				d1 = (*x)->value.distance(this->mid_pt);
+				d2 = (*rx)->value.distance(this->mid_pt);
+				d3 = (*rrx)->value.distance(this->mid_pt);
+				if (d2 < d1 && d2 < d3) {
+					this->remove_node(rx);
+					rx = x;
+					x = &(*x)->prev;
+				} else
+					x = rx, rx = rrx, rrx = &(*rrx)->next;
+			}
+		}
+	}
 };
 
 int main() {
 	convex_hull<double> list;
-	point<double> p1(1, 2), p2(2, 3), p3(3, 1), p4(4, 4), p5(3, 3);
+	point<double> p1(1, 2), p2(2, 3), p3(3, 1), p4(4, 4), p5(3, 2);
 	list.insert(p1);
 	list.insert(p2);
 	list.insert(p3);
 	list.insert(p4);
 	list.insert(p5);
 	list.display_forwards();
+	list.eleminate();
 }
