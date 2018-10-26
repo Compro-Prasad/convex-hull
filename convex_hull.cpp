@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
 
 	if(argc < 2){
 		fprintf(stderr, "Error: We Expect atleast one argument, as Input text file.\n"
-			"Usage - You provide Input text file as argument, you can also give output file"
+			"Usage - You provide Input text file as argument, you can also give output file "
 			"in which you want to save output, if you don't provide any output file then "
 			"result is shown in STDOUT.\n");
 		exit(1);
