@@ -207,7 +207,7 @@ int main(int argc, char* argv[]) {
 		{
 			fprintf(stderr, "Error, please enter a valid number.\n");
 			exit(1);
-		}		
+		}
 		point<double> p1;
 		p1.x = xx;
 		p1.y = yy;
