@@ -21,7 +21,7 @@ struct point
 	}
 
 	void print() {
-		printf("%lf, %lf\n", this->x, this->y);
+		printf("%lf %lf\n", this->x, this->y);
 	}
 
 	point operator+(point<T> p) {
