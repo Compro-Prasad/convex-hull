@@ -162,9 +162,12 @@ int main(int argc, char* argv[]) {
 	FILE *ifp, *ofp;
 
 	if(argc < 2){
-		fprintf(stderr, "Error: We Expect atleast one argument, as Input text file.\nUsage - You can give Input text file as argument, you can also give output text in which you want to save output, if you don't provide any output file then result is shown in STDOUT.\n");
+		fprintf(stderr, "Error: We Expect atleast one argument, as Input text file.\n"
+			"Usage - You provide Input text file as argument, you can also give output file"
+			"in which you want to save output, if you don't provide any output file then "
+			"result is shown in STDOUT.\n");
 		exit(1);
-		}
+	}
 
 	ifp = freopen(argv[1], "r", stdin);
 
@@ -178,13 +181,13 @@ int main(int argc, char* argv[]) {
 
 	convex_hull<double> list;
 
-	long long int cases;
-	if(scanf("%lld",&cases) != 1)
+	long long int no_of_points;
+	if(scanf("%lld",&no_of_points) != 1)
 	{
 	  	fprintf(stderr, "Error, please enter a valid Integer.\n");
 	  	exit(1);
 	}
-	while(cases--)
+	while(no_of_points--)
 	{
 		double xx, yy;
 
