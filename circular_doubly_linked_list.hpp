@@ -4,8 +4,6 @@
 		if (this->rear) {												\
 			Dlink<T> *t = ptr;											\
 			do {														\
-				printf("%p %p %p : ",									\
-					   t->prev, t, t->next);							\
 				t->value.print();										\
 				t = n;													\
 			} while (t != ptr);											\
