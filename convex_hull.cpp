@@ -158,13 +158,38 @@ public:
 };
 
 int main() {
+
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+
 	convex_hull<double> list;
-	point<double> p1(1, 2), p2(2, 3), p3(3, 1), p4(4, 4), p5(3, 2);
-	list.insert(p1);
-	list.insert(p2);
-	list.insert(p3);
-	list.insert(p4);
-	list.insert(p5);
+	
+	long long int cases;
+	if(scanf("%lld",&cases) != 1)
+	{
+		printf("Error, please enter a valid Integer.\n");
+		return 0;
+	}
+	while(cases--)
+	{
+		double xx, yy;
+
+		if(scanf("%lf",&xx) != 1)
+		{
+			printf("Error!, enter a valid number.");
+			return 0;
+		}
+		if(scanf("%lf",&yy) != 1)
+		{
+			printf("Error!, enter a valid number.");
+			return 0;
+		}		
+		point<double> p1;
+		p1.x = xx;
+		p1.y = yy;
+		list.insert(p1);
+	}
+
 	list.display_forwards();
 	list.eleminate();
 }
