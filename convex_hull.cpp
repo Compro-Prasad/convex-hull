@@ -136,7 +136,7 @@ public:
 		}
 	}
 
-	void eleminate() {
+	void eliminate() {
 		if (this->n > 2) {
 			T d1, d2, d3;
 			Dlink<point<T> > **x = &this->rear,
@@ -157,18 +157,32 @@ public:
 	}
 };
 
-int main() {
+int main(int argc, char* argv[]) {
 
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+	FILE *ifp, *ofp;
+
+	if(argc < 2){
+		fprintf(stderr, "Error: We Expect atleast one argument, as Input text file.\nUsage - You can give Input text file as argument, you can also give output text in which you want to save output, if you don't provide any output file then result is shown in STDOUT.\n");
+		exit(1);
+		}
+
+	ifp = freopen(argv[1], "r", stdin);
+
+	if (ifp == NULL) {
+	  	fprintf(stderr, "Can't open input file %s\n", argv[1]);
+	  	exit(1);
+	}
+
+	if(argc > 2)
+		freopen(argv[2], "w+", stdout);
 
 	convex_hull<double> list;
-	
+
 	long long int cases;
 	if(scanf("%lld",&cases) != 1)
 	{
-		printf("Error, please enter a valid Integer.\n");
-		return 0;
+	  	fprintf(stderr, "Error, please enter a valid Integer.\n");
+	  	exit(1);
 	}
 	while(cases--)
 	{
@@ -176,13 +190,13 @@ int main() {
 
 		if(scanf("%lf",&xx) != 1)
 		{
-			printf("Error!, enter a valid number.");
-			return 0;
+		  	fprintf(stderr, "Error, please enter a valid number.\n");
+		  	exit(1);
 		}
 		if(scanf("%lf",&yy) != 1)
 		{
-			printf("Error!, enter a valid number.");
-			return 0;
+		  	fprintf(stderr, "Error, please enter a valid number.\n");
+		  	exit(1);
 		}		
 		point<double> p1;
 		p1.x = xx;
@@ -191,5 +205,5 @@ int main() {
 	}
 
 	list.display_forwards();
-	list.eleminate();
+	list.eliminate();
 }
