@@ -93,7 +93,7 @@ public:
 					newNode->join_after(&this->rear);
 					++this->n;
 				} else {
-					newNode     = new Dlink<point<T> >(p);
+					newNode = new Dlink<point<T> >(p);
 					newNode->join_after(&this->front);
 					this->front = newNode;
 					++this->n;
@@ -107,7 +107,7 @@ public:
 
 		else if (this->compare_by_angle_from_vertical(p, this->front->value) > 0) {
 			/* Push 'p' after front if it forms the max angle from vertical */
-			newNode     = new Dlink<point<T> >(p);
+			newNode = new Dlink<point<T> >(p);
 			newNode->join_after(&this->front);
 			this->front = newNode;
 			++this->n;
@@ -127,7 +127,7 @@ public:
 					newNode->join_after(ptr);
 					++this->n;
 				} else if (check == 0 &&
-						   p.distance(this->mid_pt) > (*ptr)->value.distance(this->mid_pt)) {
+						 p.distance(this->mid_pt) > (*ptr)->value.distance(this->mid_pt)) {
 					newNode = new Dlink<point<T> >(p);
 					newNode->replace_on(ptr);
 					++this->n;
@@ -136,7 +136,7 @@ public:
 		}
 	}
 
-	void eleminate() {
+	void eliminate() {
 		if (this->n > 2) {
 			T d1, d2, d3;
 			Dlink<point<T> > **x = &this->rear,
@@ -157,14 +157,63 @@ public:
 	}
 };
 
-int main() {
+int main(int argc, char* argv[]) {
+
+	FILE *ifp, *ofp;
+
+	if(argc < 2){
+		fprintf(stderr, "Error: We Expect atleast one argument, as Input text file.\n"
+			"Usage - You provide Input text file as argument, you can also give output file "
+			"in which you want to save output, if you don't provide any output file then "
+			"result is shown in STDOUT.\n");
+		exit(1);
+	}
+
+	ifp = freopen(argv[1], "r", stdin);
+
+	if (ifp == NULL) {
+		fprintf(stderr, "Can't open input file %s\n", argv[1]);
+		exit(1);
+	}
+
+	if(argc > 2)
+		freopen(argv[2], "w+", stdout);
+
 	convex_hull<double> list;
-	point<double> p1(1, 2), p2(2, 3), p3(3, 1), p4(4, 4), p5(3, 2);
-	list.insert(p1);
-	list.insert(p2);
-	list.insert(p3);
-	list.insert(p4);
-	list.insert(p5);
+
+	long long int no_of_points;
+	if(scanf("%lld",&no_of_points) != 1)
+	{
+		fprintf(stderr, "File is malformed. It should have two space separated real numbers per line.\n"
+			"First line denoting no. of points(N)\n"
+			"Following N lines containing two space separated real numbers denoting "
+			"x and y coordinates respectively.\n"
+			"Example :\n"
+			"2\n"
+			"1 1\n"
+			"2 2\n");
+		exit(1);
+	}
+	while(no_of_points--)
+	{
+		double xx, yy;
+
+		if(scanf("%lf",&xx) != 1)
+		{
+			fprintf(stderr, "Error, please enter a valid number.\n");
+			exit(1);
+		}
+		if(scanf("%lf",&yy) != 1)
+		{
+			fprintf(stderr, "Error, please enter a valid number.\n");
+			exit(1);
+		}
+		point<double> p1;
+		p1.x = xx;
+		p1.y = yy;
+		list.insert(p1);
+	}
+
 	list.display_forwards();
-	list.eleminate();
+	list.eliminate();
 }
