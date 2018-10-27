@@ -44,7 +44,7 @@ if((no_of_args == 3 and sys.argv[2] != '-s') or (no_of_args > 3)):
 				inp_y.append(b)
 			except:
 				sys.stderr.write("ERROR! - File is malformed. It should have two space separated \
-					real numbers per line., with first line containing no. of values.")
+					real numbers per line., with first line containing no. of points.")
 				sys.exit(1)
 		f.close()
 		plt.scatter(inp_x, inp_y)
