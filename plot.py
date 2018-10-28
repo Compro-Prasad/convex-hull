@@ -29,6 +29,8 @@ with open(sys.argv[1], "r") as f:
 				real numbers per line.")
 			sys.exit(1)
 	f.close()
+	out_x += out_x
+	out_y += out_y
 plt.scatter(out_x, out_y)
 plt.plot(out_x, out_y,color='magenta')
 
